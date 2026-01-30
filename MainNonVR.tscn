@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://bb1mmfhiwetec"]
+
+[ext_resource type="Script" uid="uid://bi2bsnms32pgs" path="res://MainNonVR.gd" id="1_15aaj"]
+[ext_resource type="Material" uid="uid://dp5wl43t3l5n2" path="res://Materials/Corner.material" id="2_hduip"]
+[ext_resource type="Texture2D" uid="uid://c1utlkbehqkt0" path="res://icon.svg" id="3_hduip"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_15aaj"]
+
+[sub_resource type="Sky" id="Sky_hduip"]
+sky_material = SubResource("ProceduralSkyMaterial_15aaj")
+
+[sub_resource type="Environment" id="Environment_wj2r7"]
+background_mode = 2
+sky = SubResource("Sky_hduip")
+
+[sub_resource type="SphereMesh" id="SphereMesh_wj2r7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_f5ye5"]
+
+[sub_resource type="Shader" id="Shader_15aaj"]
+code = "shader_type spatial;
+render_mode world_vertex_coords, cull_disabled, unshaded; // Optional: Removes lighting
+
+// Uniforms for the four corners
+uniform vec3 top_left = vec3(-1.0, 1.0, 0.0);
+uniform vec3 top_right = vec3(1.0, 1.0, 0.0);
+uniform vec3 bottom_left = vec3(-1.0, -1.0, 0.0);
+uniform vec3 bottom_right = vec3(1.0, -1.0, 0.0);
+
+uniform sampler2D albedo_tex : source_color;
+
+void vertex() {
+	// UV.x goes 0->1 left to right, UV.y goes 0->1 top to bottom
+	vec3 top = mix(top_left, top_right, UV.x);
+	vec3 bottom = mix(bottom_left, bottom_right, UV.x);
+	
+	// Final position is interpolation between top and bottom
+	VERTEX = mix(top, bottom, UV.y);
+}
+
+void fragment() {
+	ALBEDO = texture(albedo_tex, UV).rgb;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hduip"]
+render_priority = 0
+shader = SubResource("Shader_15aaj")
+shader_parameter/top_left = Vector3(-1.5160434, 7.740981, -4.982443)
+shader_parameter/top_right = Vector3(4.706437, 4.612176, -2.917328)
+shader_parameter/bottom_left = Vector3(-0.4029684, 6.6526937, 0)
+shader_parameter/bottom_right = Vector3(4.364287, 6.046257, 2.0432138)
+shader_parameter/albedo_tex = ExtResource("3_hduip")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_wj2r7"]
+subdivide_width = 2
+subdivide_depth = 2
+
+[node name="MainNonVR" type="Node3D" unique_id=841648081 node_paths=PackedStringArray("overlay_mesh")]
+script = ExtResource("1_15aaj")
+overlay_mesh = NodePath("MeshInstance3D")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=318875948]
+transform = Transform3D(1, 0, 0, 0, 0.99998736, -0.005026579, 0, 0.005026579, 0.99998736, 0, 1.4480194, 8.959315)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1472018334]
+environment = SubResource("Environment_wj2r7")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=724896316]
+transform = Transform3D(0.4943667, -0.70414037, 0.5096939, 0, 0.58635825, 0.81005186, -0.86925346, -0.40046266, 0.28987598, 0, 4.9265795, 0)
+
+[node name="Corners" type="Node3D" parent="." unique_id=1249261932]
+
+[node name="Corner0" type="Area3D" parent="Corners" unique_id=1748534757]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5160434, 7.740981, -4.982443)
+
+[node name="Sphere" type="MeshInstance3D" parent="Corners/Corner0" unique_id=80594642]
+material_override = ExtResource("2_hduip")
+mesh = SubResource("SphereMesh_wj2r7")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Corners/Corner0" unique_id=1465705306]
+shape = SubResource("SphereShape3D_f5ye5")
+
+[node name="Corner1" type="Area3D" parent="Corners" unique_id=1176667614]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.706437, 4.612176, -2.917328)
+
+[node name="Sphere" type="MeshInstance3D" parent="Corners/Corner1" unique_id=1823550086]
+material_override = ExtResource("2_hduip")
+mesh = SubResource("SphereMesh_wj2r7")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Corners/Corner1" unique_id=834164882]
+shape = SubResource("SphereShape3D_f5ye5")
+
+[node name="Corner2" type="Area3D" parent="Corners" unique_id=112462651]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.364287, 6.046257, 2.0432138)
+
+[node name="Sphere" type="MeshInstance3D" parent="Corners/Corner2" unique_id=1460938446]
+material_override = ExtResource("2_hduip")
+mesh = SubResource("SphereMesh_wj2r7")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Corners/Corner2" unique_id=128026372]
+shape = SubResource("SphereShape3D_f5ye5")
+
+[node name="Corner3" type="Area3D" parent="Corners" unique_id=1472195515]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4029684, 6.6526937, 0)
+
+[node name="Sphere" type="MeshInstance3D" parent="Corners/Corner3" unique_id=1976713843]
+material_override = ExtResource("2_hduip")
+mesh = SubResource("SphereMesh_wj2r7")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Corners/Corner3" unique_id=652140771]
+shape = SubResource("SphereShape3D_f5ye5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1974705900]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6929255, 0)
+material_override = SubResource("ShaderMaterial_hduip")
+mesh = SubResource("PlaneMesh_wj2r7")
