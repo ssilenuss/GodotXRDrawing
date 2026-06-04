@@ -15,18 +15,20 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Meta Passthrough Sample"
-run/main_scene="res://MetaPassthrough/main.tscn"
+run/main_scene="uid://qxqaslcqnfa4"
 config/features=PackedStringArray("4.6", "GL Compatibility")
+boot_splash/bg_color=Color(2.5990605e-06, 0, 0.6759347, 1)
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [layer_names]
 
 3d_physics/layer_1="Corners"
+3d_physics/layer_8="Controllers"
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
 
 [xr]
@@ -38,3 +40,4 @@ shaders/enabled=true
 openxr/extensions/meta/render_model=true
 openxr/extensions/meta/passthrough=true
 openxr/extensions/meta/color_space/starting_color_space=3
+openxr/extensions/meta/hand_tracking_aim=true
