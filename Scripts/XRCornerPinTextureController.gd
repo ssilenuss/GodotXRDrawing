@@ -3,29 +3,34 @@ extends Node3D
 class_name XRCornerPinTextureController
 
 @export_tool_button("Set Corners") var set_corners_action = set_corners
-@export var right_controller_touch_ball : MeshInstance3D
-@export var left_controller_touch_ball : MeshInstance3D
+#@export var right_controller_touch_ball : MeshInstance3D
+#@export var left_controller_touch_ball : MeshInstance3D
 @export var overlay_mesh: MeshInstance3D
-@export var corner_pins: Array[Area3D]
-
-var grabbed_pin : int = -1
+@export var corner_pins: Array[Grabbable]
+#
+#var grabbed_pin : int = -1
 var overlay_mat: ShaderMaterial
-var active_controller: XRController3D
+#var active_controller: XRController3D
 
 func _ready() -> void:
 	overlay_mat = overlay_mesh.get_active_material(0)
 	for i in corner_pins.size():
 		update_overlay_cornerpin(i)
+		corner_pins[i].active.connect(_on_cornerpin_active)
+		
+func _on_cornerpin_active(_c:Grabbable)->void:
+	var idx : int = corner_pins.find(_c)
+	update_overlay_cornerpin(idx)
 
-func _process(_delta: float) -> void:
-	if active_controller:
-		match active_controller.name:
-			"LeftController":
-				corner_pins[grabbed_pin].global_position = left_controller_touch_ball.global_position
-				update_overlay_cornerpin(grabbed_pin)
-			"RightController":
-				corner_pins[grabbed_pin].global_position = right_controller_touch_ball.global_position
-				update_overlay_cornerpin(grabbed_pin)
+#func _process(_delta: float) -> void:
+	#if active_controller:
+		#match active_controller.name:
+			#"LeftController":
+				#corner_pins[grabbed_pin].global_position = left_controller_touch_ball.global_position
+				#update_overlay_cornerpin(grabbed_pin)
+			#"RightController":
+				#corner_pins[grabbed_pin].global_position = right_controller_touch_ball.global_position
+				#update_overlay_cornerpin(grabbed_pin)
 
 func update_overlay_cornerpin(_pin_num:int)->void:
 	match _pin_num:
@@ -43,14 +48,14 @@ func set_corners()->void:
 		update_overlay_cornerpin(i)
 	
 
-func _on_controller_corner_grab(_controller: XRController3D, _pin_num: int) -> void:
-	grabbed_pin = _pin_num
-	active_controller = _controller
+#func _on_controller_corner_grab(_controller: XRController3D, _pin_num: int) -> void:
+	#grabbed_pin = _pin_num
+	#active_controller = _controller
 	
 
-func _on_left_controller_button_released(name: String) -> void:
-	active_controller = null
+#func _on_left_controller_button_released(name: String) -> void:
+	#active_controller = null
 
-	
-func _on_right_controller_button_released(name: String) -> void:
-	active_controller = null
+	#
+#func _on_right_controller_button_released(name: String) -> void:
+	#active_controller = null

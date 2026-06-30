@@ -2,18 +2,21 @@
 extends Area3D
 class_name Grabbable
 
-var active_controller : XRController3D
-var active_grab_area : Area3D
+var active_controller : XRController3D 		
+var active_grab_area : Area3D 
 var rotation_offset : Basis = Basis.IDENTITY
 
 var left_controller : XRController3D
 var right_controller : XRController3D
 var left_touch_ball : MeshInstance3D
 var right_touch_ball : MeshInstance3D
-var left_grab_area : Area3D
+var left_grab_area : Area3D 
 var right_grab_area: Area3D
 
+signal active(_g:Grabbable)
+
 func _ready() -> void:
+	add_to_group("grabbables")
 	set_collision_mask_value(8, true)
 	left_controller = get_tree().get_first_node_in_group("left_controller")
 	right_controller = get_tree().get_first_node_in_group("right_controller")
@@ -47,8 +50,14 @@ func _process(_delta: float) -> void:
 				var target_basis : Basis = right_touch_ball.global_transform.basis.orthonormalized() * rotation_offset
 				global_transform = Transform3D(target_basis, right_touch_ball.global_position)
 				
+		active.emit(self)
+				
 func grab(_c: XRController3D) -> void:
+	for g in get_tree().get_nodes_in_group("grabbables"):
+		if g is Grabbable:
+			g.active_controller = null
 	active_controller = _c
+	active.emit(self)
 
 func jump_to(_c: XRController3D)->void:
 	match _c:
@@ -58,8 +67,18 @@ func jump_to(_c: XRController3D)->void:
 		right_controller:
 			global_transform = right_touch_ball.global_transform 
 	
+	grab(_c)
+	
 
 func _on_area_entered(_a:Area3D)->void:
+	if _a is Grabbable:
+		print("grabbable entered.")
+		return
+	
+	for g in get_tree().get_nodes_in_group("grabbables"):
+		if g is Grabbable:
+			g.active_grab_area = null
+			
 	active_grab_area = _a
 	#print("Area Entered!: ", _a)
 	#print("Active_grabarea: ", active_grab_area)
@@ -72,24 +91,24 @@ func _on_area_entered(_a:Area3D)->void:
 			mat.albedo_color = Color.GREEN
 
 func _on_area_exited(_a:Area3D)->void:
+	if _a is Grabbable:
+		return
 	match active_grab_area:
 		left_grab_area:
 			var mat = left_touch_ball.get_surface_override_material(0)
 			mat.albedo_color = Color.WHITE
 			if active_controller == left_controller:
 				active_controller = null
-			if active_grab_area == left_grab_area:
-				active_grab_area == null
+			active_grab_area == null
 		right_grab_area:
 			var mat = right_touch_ball.get_surface_override_material(0)
 			mat.albedo_color = Color.WHITE
 			if active_controller == right_controller:
 				active_controller = null
-			if active_grab_area == right_grab_area:
-				active_grab_area == null
+			active_grab_area == null
 				
 func _on_left_button_pressed(_name: String)->void:
-	print("left button_pressed!: ", _name)
+	#print("left button_pressed!: ", _name)
 	#print("Active_grabarea: ", active_grab_area)
 	if _name == "trigger_click" and active_grab_area ==left_grab_area:
 		active_controller = left_controller
@@ -98,7 +117,7 @@ func _on_left_button_pressed(_name: String)->void:
 		
 
 func _on_right_button_pressed(_name: String)->void:
-	print("right button_pressed!: ", _name)
+	#print("right button_pressed!: ", _name)
 	#print("Active_grabarea: ", active_grab_area)
 	if _name == "trigger_click" and active_grab_area ==right_grab_area:
 		active_controller = right_controller
@@ -108,8 +127,12 @@ func _on_right_button_pressed(_name: String)->void:
 func _on_left_button_released(_name: String)->void:
 	if active_controller == left_controller:
 		active_controller = null
+		if active_grab_area == left_grab_area:
+			active_grab_area = null
 
 
 func _on_right_button_released(_name: String)->void:
 	if active_controller == right_controller:
 		active_controller = null
+		if active_grab_area == right_grab_area:
+			active_grab_area = null

@@ -1,6 +1,6 @@
 extends StartXR
 
-const CAPSULE_MATERIAL = preload("res://capsule_material.tres")
+const CAPSULE_MATERIAL = preload("res://MetaHandTracking/capsule_material.tres")
 
 @onready var left_hand_ray_cast: RayCast3D = $XROrigin3D/LeftController/RayCast3D
 @onready var left_hand_tracker: XRNode3D = $XROrigin3D/LeftHandTracker

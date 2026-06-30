@@ -1,7 +1,7 @@
 extends OpenXRFbPassthroughGeometry
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not "--xrsim-automated-tests" in OS.get_cmdline_user_args():
 		# When we're running tests via the XR Simulator, we don't want this
 		# to be animated, which can lead to differences in the screenshots.

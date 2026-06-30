@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://b1jfrga88vluv"]
+
+[ext_resource type="Script" uid="uid://b6ieo2a3ynkhb" path="res://Scenes/value_display.gd" id="1_fcocs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhp74"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.24477634, 0.24477643, 0.24477628, 1)
+
+[node name="alphaMenu" type="Control" unique_id=831668772]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1086186240]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VboxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1463371925]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Panel" type="PanelContainer" parent="MarginContainer/VboxContainer" unique_id=647833915]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="VboxContainer" type="VBoxContainer" parent="MarginContainer/VboxContainer/Panel" unique_id=615874984]
+layout_mode = 2
+alignment = 1
+
+[node name="AlphaLabel" type="Label" parent="MarginContainer/VboxContainer/Panel/VboxContainer" unique_id=1984005249]
+layout_mode = 2
+text = "ALPHA"
+horizontal_alignment = 1
+
+[node name="AlphaSlider" type="HSlider" parent="MarginContainer/VboxContainer/Panel/VboxContainer" unique_id=1615284208]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="ValueDisplay" type="Label" parent="MarginContainer/VboxContainer/Panel/VboxContainer" unique_id=863570910 node_paths=PackedStringArray("to_display")]
+layout_mode = 2
+text = "ALPHAvALUE"
+horizontal_alignment = 1
+script = ExtResource("1_fcocs")
+to_display = NodePath("../AlphaSlider")
+
+[node name="Panel2" type="PanelContainer" parent="MarginContainer/VboxContainer" unique_id=1098633548]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VboxContainer/Panel2" unique_id=2118431906]
+layout_mode = 2
+alignment = 1
+
+[node name="Default" type="Button" parent="MarginContainer/VboxContainer/Panel2/HBoxContainer" unique_id=1377100043]
+layout_mode = 2
+text = "DEFAULT"
+
+[node name="Picture" type="Button" parent="MarginContainer/VboxContainer/Panel2/HBoxContainer" unique_id=37502953]
+layout_mode = 2
+text = "PICTURE"
+
+[node name="XRCam" type="Button" parent="MarginContainer/VboxContainer/Panel2/HBoxContainer" unique_id=1136761047]
+layout_mode = 2
+text = "XRCAM"
+
+[node name="Edges" type="Button" parent="MarginContainer/VboxContainer/Panel2/HBoxContainer" unique_id=1424602001]
+layout_mode = 2
+text = "EDGES"
+
+[node name="Panel3" type="PanelContainer" parent="MarginContainer/VboxContainer" unique_id=1040167924]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer/VboxContainer/Panel3" unique_id=1541116252]
+layout_mode = 2
+alignment = 1
+
+[node name="PicFileDialog" type="FileDialog" parent="MarginContainer/VboxContainer/Panel3/HBoxContainer" unique_id=567502073]
+oversampling_override = 1.0
+title = "Open File(s)"
+initial_position = 1
+size = Vector2i(1024, 1024)
+dialog_hide_on_ok = true
+file_mode = 1
+access = 2
+use_native_dialog = true
+
+[node name="LoadPic" type="Button" parent="MarginContainer/VboxContainer/Panel3/HBoxContainer" unique_id=1312334227]
+layout_mode = 2
+text = "Load Picture From File"
+
+[node name="Button" type="Button" parent="MarginContainer/VboxContainer/Panel3/HBoxContainer" unique_id=58733199]
+layout_mode = 2
+toggle_mode = true
+text = "SBS"

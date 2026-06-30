@@ -2,11 +2,41 @@
 extends Node3D
 class_name XR_Cam_Rig
 
+@export_category("TextureButtons")
+enum ExpandMode {KEEP, IGNORE, WIDTH, HEIGHT}
+@export var expand: ExpandMode : 
+	set(value):
+		if !left_texture or !right_texture:
+			return
+		expand = value
+		match expand:
+			ExpandMode.KEEP:
+				left_texture.set_expand_mode(TextureRect.EXPAND_KEEP_SIZE)
+				right_texture.set_expand_mode(TextureRect.EXPAND_KEEP_SIZE)
+			ExpandMode.IGNORE:
+				left_texture.set_expand_mode(TextureRect.EXPAND_IGNORE_SIZE)
+				right_texture.set_expand_mode(TextureRect.EXPAND_IGNORE_SIZE)
+			ExpandMode.WIDTH:
+				left_texture.set_expand_mode(TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL)
+				right_texture.set_expand_mode(TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL)
+			ExpandMode.HEIGHT:
+				left_texture.set_expand_mode(TextureRect.EXPAND_FIT_HEIGHT_PROPORTIONAL)
+				right_texture.set_expand_mode(TextureRect.EXPAND_FIT_HEIGHT_PROPORTIONAL)
+				
+
+@export_category("Dependants")
 @export var interpupillary_distance: float = 0.065 # Average human IPD in meters
 @export var camera_left: Camera3D 
 @export var camera_right: Camera3D 
 @export var left_node: Node3D
 @export var right_node: Node3D
+
+@export var left_texture: TextureRect
+@export var right_texture : TextureRect
+
+
+
+
 
 func _ready() -> void:
 		get_hardware_ipd()
