@@ -36,6 +36,7 @@ func _process(_delta: float) -> void:
 			XRServer.center_on_hmd(XRServer.RESET_BUT_KEEP_TILT, true)
 	
 func _on_controller_button_pressed(_c:XRTouchController, _name:String)->void:
+	print(_name)
 	if _name == "trigger_click":
 		if _c.ray.is_colliding():
 			var collider = _c.ray.get_collider()
@@ -57,7 +58,7 @@ func _on_controller_button_released(_c: XRController3D, _name: String)->void:
 	pass
 	
 func _on_controller_input_vector2_changed(_c:XRController3D, _name: String, _value: Vector2)->void:
-	print("controller:", _c,  "input: ", _name, " value: ", _value)
+	pass
 	
 func _on_left_controller_button_pressed(_name: String) -> void:
 	button_pressed.get_or_add(_name, left_controller)

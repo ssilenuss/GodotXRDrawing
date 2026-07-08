@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b1jfrga88vluv"]
 
 [ext_resource type="Script" uid="uid://b6ieo2a3ynkhb" path="res://Scenes/value_display.gd" id="1_fcocs"]
+[ext_resource type="Script" uid="uid://b1ndpo7vxwpih" path="res://Scenes/XR_MenuController.gd" id="1_qa8yt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhp74"]
 content_margin_left = 20.0
@@ -9,94 +10,58 @@ content_margin_right = 20.0
 content_margin_bottom = 20.0
 bg_color = Color(0.24477634, 0.24477643, 0.24477628, 1)
 
-[node name="alphaMenu" type="Control" unique_id=831668772]
+[node name="alphaMenu" type="Control" unique_id=831668772 node_paths=PackedStringArray("panel_parent")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_qa8yt")
+panel_parent = NodePath("VBoxContainer/MarginContainer")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1086186240]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=491122348]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1786730967]
+layout_mode = 2
+alignment = 1
+
+[node name="Left" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=504553010]
+layout_mode = 2
+text = "<"
+
+[node name="Right" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=387629372]
+layout_mode = 2
+text = ">"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer" unique_id=1086186240]
+layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VboxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1463371925]
+[node name="Menu0" type="VBoxContainer" parent="VBoxContainer/MarginContainer" unique_id=919772796]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Panel" type="PanelContainer" parent="MarginContainer/VboxContainer" unique_id=647833915]
-visible = false
+[node name="Panel3" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu0" unique_id=1495951720]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
 
-[node name="VboxContainer" type="VBoxContainer" parent="MarginContainer/VboxContainer/Panel" unique_id=615874984]
+[node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu0/Panel3" unique_id=1493655249]
 layout_mode = 2
 alignment = 1
 
-[node name="AlphaLabel" type="Label" parent="MarginContainer/VboxContainer/Panel/VboxContainer" unique_id=1984005249]
-layout_mode = 2
-text = "ALPHA"
-horizontal_alignment = 1
-
-[node name="AlphaSlider" type="HSlider" parent="MarginContainer/VboxContainer/Panel/VboxContainer" unique_id=1615284208]
-layout_mode = 2
-max_value = 1.0
-step = 0.001
-
-[node name="ValueDisplay" type="Label" parent="MarginContainer/VboxContainer/Panel/VboxContainer" unique_id=863570910 node_paths=PackedStringArray("to_display")]
-layout_mode = 2
-text = "ALPHAvALUE"
-horizontal_alignment = 1
-script = ExtResource("1_fcocs")
-to_display = NodePath("../AlphaSlider")
-
-[node name="Panel2" type="PanelContainer" parent="MarginContainer/VboxContainer" unique_id=1098633548]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VboxContainer/Panel2" unique_id=2118431906]
-layout_mode = 2
-alignment = 1
-
-[node name="Default" type="Button" parent="MarginContainer/VboxContainer/Panel2/HBoxContainer" unique_id=1377100043]
-layout_mode = 2
-text = "DEFAULT"
-
-[node name="Picture" type="Button" parent="MarginContainer/VboxContainer/Panel2/HBoxContainer" unique_id=37502953]
-layout_mode = 2
-text = "PICTURE"
-
-[node name="XRCam" type="Button" parent="MarginContainer/VboxContainer/Panel2/HBoxContainer" unique_id=1136761047]
-layout_mode = 2
-text = "XRCAM"
-
-[node name="Edges" type="Button" parent="MarginContainer/VboxContainer/Panel2/HBoxContainer" unique_id=1424602001]
-layout_mode = 2
-text = "EDGES"
-
-[node name="Panel3" type="PanelContainer" parent="MarginContainer/VboxContainer" unique_id=1040167924]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
-
-[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer/VboxContainer/Panel3" unique_id=1541116252]
-layout_mode = 2
-alignment = 1
-
-[node name="PicFileDialog" type="FileDialog" parent="MarginContainer/VboxContainer/Panel3/HBoxContainer" unique_id=567502073]
+[node name="PicFileDialog" type="FileDialog" parent="VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer" unique_id=1282791094]
 oversampling_override = 1.0
 title = "Open File(s)"
 initial_position = 1
@@ -106,11 +71,431 @@ file_mode = 1
 access = 2
 use_native_dialog = true
 
-[node name="LoadPic" type="Button" parent="MarginContainer/VboxContainer/Panel3/HBoxContainer" unique_id=1312334227]
+[node name="GlbFileDialog" type="FileDialog" parent="VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer" unique_id=302250574]
+oversampling_override = 1.0
+title = "Open File(s)"
+initial_position = 1
+size = Vector2i(1024, 1024)
+dialog_hide_on_ok = true
+file_mode = 1
+access = 2
+use_native_dialog = true
+
+[node name="LoadPic" type="Button" parent="VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer" unique_id=729883640]
 layout_mode = 2
 text = "Load Picture From File"
 
-[node name="Button" type="Button" parent="MarginContainer/VboxContainer/Panel3/HBoxContainer" unique_id=58733199]
+[node name="LoadGLB" type="Button" parent="VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer" unique_id=1026658517]
+layout_mode = 2
+text = "Load GLB From File"
+
+[node name="SBS" type="Button" parent="VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer" unique_id=361857011]
 layout_mode = 2
 toggle_mode = true
 text = "SBS"
+
+[node name="Menu1 Sobel" type="VBoxContainer" parent="VBoxContainer/MarginContainer" unique_id=636058422]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="SobelPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu1 Sobel" unique_id=1100351918]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="Hbox" type="HBoxContainer" parent="VBoxContainer/MarginContainer/Menu1 Sobel/SobelPanel" unique_id=2030993813]
+layout_mode = 2
+alignment = 1
+
+[node name="EnableSobel" type="Button" parent="VBoxContainer/MarginContainer/Menu1 Sobel/SobelPanel/Hbox" unique_id=1159141511]
+layout_mode = 2
+toggle_mode = true
+text = "ENABLE SOBEL"
+
+[node name="InvertSobel" type="Button" parent="VBoxContainer/MarginContainer/Menu1 Sobel/SobelPanel/Hbox" unique_id=1838189691]
+layout_mode = 2
+toggle_mode = true
+text = "INVERT SOBEL"
+
+[node name="ThresholdPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu1 Sobel" unique_id=1155369710]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="VboxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu1 Sobel/ThresholdPanel" unique_id=349913495]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu1 Sobel/ThresholdPanel/VboxContainer" unique_id=1666316874]
+layout_mode = 2
+text = "EDGE THRESHHOLD"
+horizontal_alignment = 1
+
+[node name="SobelThresholdSlider" type="HSlider" parent="VBoxContainer/MarginContainer/Menu1 Sobel/ThresholdPanel/VboxContainer" unique_id=2068833710]
+layout_mode = 2
+max_value = 0.5
+step = 0.001
+value = 0.05
+
+[node name="ValueDisplay" type="Label" parent="VBoxContainer/MarginContainer/Menu1 Sobel/ThresholdPanel/VboxContainer" unique_id=715496638 node_paths=PackedStringArray("to_display")]
+layout_mode = 2
+text = "ALPHAvALUE"
+horizontal_alignment = 1
+script = ExtResource("1_fcocs")
+to_display = NodePath("../SobelThresholdSlider")
+
+[node name="SmoothingPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu1 Sobel" unique_id=1315234739]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="VboxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu1 Sobel/SmoothingPanel" unique_id=1655298549]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu1 Sobel/SmoothingPanel/VboxContainer" unique_id=1706785552]
+layout_mode = 2
+text = "EDGE SMOOTHING"
+horizontal_alignment = 1
+
+[node name="SobelSmoothingSlider" type="HSlider" parent="VBoxContainer/MarginContainer/Menu1 Sobel/SmoothingPanel/VboxContainer" unique_id=829077484]
+layout_mode = 2
+min_value = 0.001
+max_value = 0.2
+step = 0.001
+value = 0.009999999999999998
+
+[node name="ValueDisplay" type="Label" parent="VBoxContainer/MarginContainer/Menu1 Sobel/SmoothingPanel/VboxContainer" unique_id=1819487240 node_paths=PackedStringArray("to_display")]
+layout_mode = 2
+text = "ALPHAvALUE"
+horizontal_alignment = 1
+script = ExtResource("1_fcocs")
+to_display = NodePath("../SobelSmoothingSlider")
+
+[node name="Menu2 BCS" type="VBoxContainer" parent="VBoxContainer/MarginContainer" unique_id=1463371925]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="AlphaPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu2 BCS" unique_id=647833915]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="VboxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu2 BCS/AlphaPanel" unique_id=615874984]
+layout_mode = 2
+alignment = 1
+
+[node name="AlphaLabel" type="Label" parent="VBoxContainer/MarginContainer/Menu2 BCS/AlphaPanel/VboxContainer" unique_id=1984005249]
+layout_mode = 2
+text = "ALPHA"
+horizontal_alignment = 1
+
+[node name="AlphaSlider" type="HSlider" parent="VBoxContainer/MarginContainer/Menu2 BCS/AlphaPanel/VboxContainer" unique_id=1615284208]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="ValueDisplay" type="Label" parent="VBoxContainer/MarginContainer/Menu2 BCS/AlphaPanel/VboxContainer" unique_id=863570910 node_paths=PackedStringArray("to_display")]
+layout_mode = 2
+text = "ALPHAvALUE"
+horizontal_alignment = 1
+script = ExtResource("1_fcocs")
+to_display = NodePath("../AlphaSlider")
+
+[node name="BrightnessPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu2 BCS" unique_id=2081297482]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="VboxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu2 BCS/BrightnessPanel" unique_id=1239654351]
+layout_mode = 2
+alignment = 1
+
+[node name="Brightness" type="Label" parent="VBoxContainer/MarginContainer/Menu2 BCS/BrightnessPanel/VboxContainer" unique_id=1117869398]
+layout_mode = 2
+text = "BRIGHTNESS"
+horizontal_alignment = 1
+
+[node name="BrightnessSlider" type="HSlider" parent="VBoxContainer/MarginContainer/Menu2 BCS/BrightnessPanel/VboxContainer" unique_id=247316641]
+layout_mode = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.001
+
+[node name="ValueDisplay" type="Label" parent="VBoxContainer/MarginContainer/Menu2 BCS/BrightnessPanel/VboxContainer" unique_id=1180130010 node_paths=PackedStringArray("to_display")]
+layout_mode = 2
+text = "ALPHAvALUE"
+horizontal_alignment = 1
+script = ExtResource("1_fcocs")
+to_display = NodePath("../BrightnessSlider")
+
+[node name="ContrastPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu2 BCS" unique_id=206633144]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="VboxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu2 BCS/ContrastPanel" unique_id=1896016989]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu2 BCS/ContrastPanel/VboxContainer" unique_id=1249700070]
+layout_mode = 2
+text = "CONTRAST"
+horizontal_alignment = 1
+
+[node name="ContrastSlider" type="HSlider" parent="VBoxContainer/MarginContainer/Menu2 BCS/ContrastPanel/VboxContainer" unique_id=679526279]
+layout_mode = 2
+max_value = 3.0
+step = 0.001
+value = 1.0
+
+[node name="ValueDisplay" type="Label" parent="VBoxContainer/MarginContainer/Menu2 BCS/ContrastPanel/VboxContainer" unique_id=1515483029 node_paths=PackedStringArray("to_display")]
+layout_mode = 2
+text = "ALPHAvALUE"
+horizontal_alignment = 1
+script = ExtResource("1_fcocs")
+to_display = NodePath("../ContrastSlider")
+
+[node name="SaturationPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu2 BCS" unique_id=1419599362]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="VboxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu2 BCS/SaturationPanel" unique_id=1050382366]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu2 BCS/SaturationPanel/VboxContainer" unique_id=2080996724]
+layout_mode = 2
+text = "SATURATION"
+horizontal_alignment = 1
+
+[node name="SaturationSlider" type="HSlider" parent="VBoxContainer/MarginContainer/Menu2 BCS/SaturationPanel/VboxContainer" unique_id=1983715930]
+layout_mode = 2
+max_value = 3.0
+step = 0.001
+value = 1.0
+
+[node name="ValueDisplay" type="Label" parent="VBoxContainer/MarginContainer/Menu2 BCS/SaturationPanel/VboxContainer" unique_id=309358960 node_paths=PackedStringArray("to_display")]
+layout_mode = 2
+text = "ALPHAvALUE"
+horizontal_alignment = 1
+script = ExtResource("1_fcocs")
+to_display = NodePath("../SaturationSlider")
+
+[node name="HueShiftPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu2 BCS" unique_id=965586998]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="VboxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu2 BCS/HueShiftPanel" unique_id=1725622478]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu2 BCS/HueShiftPanel/VboxContainer" unique_id=1771331240]
+layout_mode = 2
+text = "HUE SHIFT"
+horizontal_alignment = 1
+
+[node name="HueShiftSlider" type="HSlider" parent="VBoxContainer/MarginContainer/Menu2 BCS/HueShiftPanel/VboxContainer" unique_id=94915454]
+layout_mode = 2
+min_value = -180.0
+max_value = 180.0
+step = 0.001
+
+[node name="ValueDisplay" type="Label" parent="VBoxContainer/MarginContainer/Menu2 BCS/HueShiftPanel/VboxContainer" unique_id=1809875183 node_paths=PackedStringArray("to_display")]
+layout_mode = 2
+text = "ALPHAvALUE"
+horizontal_alignment = 1
+script = ExtResource("1_fcocs")
+to_display = NodePath("../HueShiftSlider")
+
+[node name="BlurPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu2 BCS" unique_id=1978943244]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="VboxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu2 BCS/BlurPanel" unique_id=1544002389]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu2 BCS/BlurPanel/VboxContainer" unique_id=1391488706]
+layout_mode = 2
+text = "BLUR AMOUNT"
+horizontal_alignment = 1
+
+[node name="BlurSlider" type="HSlider" parent="VBoxContainer/MarginContainer/Menu2 BCS/BlurPanel/VboxContainer" unique_id=1900765611]
+layout_mode = 2
+max_value = 10.0
+step = 0.001
+
+[node name="ValueDisplay" type="Label" parent="VBoxContainer/MarginContainer/Menu2 BCS/BlurPanel/VboxContainer" unique_id=984347 node_paths=PackedStringArray("to_display")]
+layout_mode = 2
+text = "ALPHAvALUE"
+horizontal_alignment = 1
+script = ExtResource("1_fcocs")
+to_display = NodePath("../BlurSlider")
+
+[node name="Menu3 Mask" type="VBoxContainer" parent="VBoxContainer/MarginContainer" unique_id=570872222]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="MaskPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask" unique_id=136170210]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="Hbox" type="HBoxContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask/MaskPanel" unique_id=473333233]
+layout_mode = 2
+alignment = 1
+
+[node name="Enable_Mask" type="Button" parent="VBoxContainer/MarginContainer/Menu3 Mask/MaskPanel/Hbox" unique_id=1788810284]
+layout_mode = 2
+toggle_mode = true
+text = "ENABLE MASK"
+
+[node name="Invert_Mask" type="Button" parent="VBoxContainer/MarginContainer/Menu3 Mask/MaskPanel/Hbox" unique_id=75048998]
+layout_mode = 2
+toggle_mode = true
+text = "INVERT MASK"
+
+[node name="HuePanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask" unique_id=458469681]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask/HuePanel" unique_id=1341282080]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu3 Mask/HuePanel/VBoxContainer" unique_id=1659933348]
+layout_mode = 2
+text = "HUE"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask/HuePanel/VBoxContainer" unique_id=1928134599]
+layout_mode = 2
+alignment = 1
+
+[node name="VboxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask/HuePanel/VBoxContainer/HBoxContainer" unique_id=1798683111]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu3 Mask/HuePanel/VBoxContainer/HBoxContainer/VboxContainer" unique_id=1230904350]
+layout_mode = 2
+text = "MIN"
+horizontal_alignment = 1
+
+[node name="HueMaskMinSpinBox" type="SpinBox" parent="VBoxContainer/MarginContainer/Menu3 Mask/HuePanel/VBoxContainer/HBoxContainer/VboxContainer" unique_id=930464148]
+layout_mode = 2
+max_value = 1.0
+
+[node name="VboxContainer2" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask/HuePanel/VBoxContainer/HBoxContainer" unique_id=704714914]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu3 Mask/HuePanel/VBoxContainer/HBoxContainer/VboxContainer2" unique_id=516776196]
+layout_mode = 2
+text = "MAX"
+horizontal_alignment = 1
+
+[node name="HueMaskMaxSpinBox" type="SpinBox" parent="VBoxContainer/MarginContainer/Menu3 Mask/HuePanel/VBoxContainer/HBoxContainer/VboxContainer2" unique_id=1377096515]
+layout_mode = 2
+max_value = 1.0
+value = 1.0
+
+[node name="SaturationMaskPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask" unique_id=1253286734]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask/SaturationMaskPanel" unique_id=941194152]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu3 Mask/SaturationMaskPanel/VBoxContainer" unique_id=339151374]
+layout_mode = 2
+text = "SATURATION"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask/SaturationMaskPanel/VBoxContainer" unique_id=621485086]
+layout_mode = 2
+alignment = 1
+
+[node name="VboxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask/SaturationMaskPanel/VBoxContainer/HBoxContainer" unique_id=1305387051]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu3 Mask/SaturationMaskPanel/VBoxContainer/HBoxContainer/VboxContainer" unique_id=1189652610]
+layout_mode = 2
+text = "MIN"
+horizontal_alignment = 1
+
+[node name="SatMaskMinSpinBox" type="SpinBox" parent="VBoxContainer/MarginContainer/Menu3 Mask/SaturationMaskPanel/VBoxContainer/HBoxContainer/VboxContainer" unique_id=270659402]
+layout_mode = 2
+max_value = 1.0
+
+[node name="VboxContainer2" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask/SaturationMaskPanel/VBoxContainer/HBoxContainer" unique_id=575727929]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu3 Mask/SaturationMaskPanel/VBoxContainer/HBoxContainer/VboxContainer2" unique_id=1335548643]
+layout_mode = 2
+text = "MAX"
+horizontal_alignment = 1
+
+[node name="SatMaskMaxSpinBox" type="SpinBox" parent="VBoxContainer/MarginContainer/Menu3 Mask/SaturationMaskPanel/VBoxContainer/HBoxContainer/VboxContainer2" unique_id=144698978]
+layout_mode = 2
+max_value = 1.0
+value = 1.0
+
+[node name="ValuePanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask" unique_id=1686614015]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rhp74")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask/ValuePanel" unique_id=726063511]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu3 Mask/ValuePanel/VBoxContainer" unique_id=1985779283]
+layout_mode = 2
+text = "VALUE"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask/ValuePanel/VBoxContainer" unique_id=1510210989]
+layout_mode = 2
+alignment = 1
+
+[node name="VboxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask/ValuePanel/VBoxContainer/HBoxContainer" unique_id=496384561]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu3 Mask/ValuePanel/VBoxContainer/HBoxContainer/VboxContainer" unique_id=314586940]
+layout_mode = 2
+text = "MIN"
+horizontal_alignment = 1
+
+[node name="ValueMaskMinSpinBox" type="SpinBox" parent="VBoxContainer/MarginContainer/Menu3 Mask/ValuePanel/VBoxContainer/HBoxContainer/VboxContainer" unique_id=633259073]
+layout_mode = 2
+max_value = 1.0
+
+[node name="VboxContainer2" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Menu3 Mask/ValuePanel/VBoxContainer/HBoxContainer" unique_id=2128864940]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Menu3 Mask/ValuePanel/VBoxContainer/HBoxContainer/VboxContainer2" unique_id=820997601]
+layout_mode = 2
+text = "MAX"
+horizontal_alignment = 1
+
+[node name="ValueMaskMaxSpinBox" type="SpinBox" parent="VBoxContainer/MarginContainer/Menu3 Mask/ValuePanel/VBoxContainer/HBoxContainer/VboxContainer2" unique_id=143154106]
+layout_mode = 2
+max_value = 1.0
+value = 1.0
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Left" to="." method="_on_left_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Right" to="." method="_on_right_pressed"]

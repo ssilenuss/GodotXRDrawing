@@ -84,18 +84,18 @@ func enable_mode_full() -> void:
 
 
 func enable_mode_geometry() -> void:
-	get_viewport().transparent_bg = true
-	world_environment.environment.background_mode = Environment.BG_COLOR
-	world_environment.environment.background_color = Color(0.3, 0.3, 0.3, 0.0)
-	root.xr_interface.environment_blend_mode = XRInterface.XR_ENV_BLEND_MODE_OPAQUE
+	#get_viewport().transparent_bg = true
+	#world_environment.environment.background_mode = Environment.BG_COLOR
+	#world_environment.environment.background_color = Color(0.3, 0.3, 0.3, 0.0)
+	#root.xr_interface.environment_blend_mode = XRInterface.XR_ENV_BLEND_MODE_OPAQUE
 	passthrough_geometry.enable_hole_punch = false
 	passthrough_geometry.show()
 
 
 func enable_mode_geometry_hp() -> void:
-	get_viewport().transparent_bg = false
-	world_environment.environment.background_mode = Environment.BG_SKY
-	root.xr_interface.environment_blend_mode = XRInterface.XR_ENV_BLEND_MODE_OPAQUE
+	#get_viewport().transparent_bg = false
+	#world_environment.environment.background_mode = Environment.BG_SKY
+	#root.xr_interface.environment_blend_mode = XRInterface.XR_ENV_BLEND_MODE_OPAQUE
 	passthrough_geometry.enable_hole_punch = true
 	passthrough_geometry.show()
 

@@ -29,7 +29,8 @@ class_name XRMenu
 
 @export var root : DrawingMain
 
-@export var file_dialog : FileDialog
+@export var pic_dialog : FileDialog
+@export var glb_dialog : FileDialog
 
 var last_mouse_pos: Vector2
 
@@ -106,8 +107,12 @@ func interact_with_canvas(local_position: Vector3, trigger_pressed: bool) -> voi
 
 
 func _on_load_pic_pressed() -> void:
-	file_dialog.popup()
+	pic_dialog.popup()
 
 
 
 		
+
+
+func _on_load_glb_pressed() -> void:
+	glb_dialog.popup()

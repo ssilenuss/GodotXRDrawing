@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://cdwpnt8l0fehy"]
+
+[ext_resource type="Script" uid="uid://d1tq1uclhm1s0" path="res://button_tester.gd" id="1_kea0j"]
+[ext_resource type="Material" uid="uid://cjnvi2tu236fi" path="res://Materials/Vertex_Shaded.material" id="2_o6u4r"]
+[ext_resource type="Material" uid="uid://2xdwvhumafdj" path="res://Materials/Vertex_Unshaded.material" id="3_dqt7k"]
+[ext_resource type="Material" uid="uid://wm3iywveyy30" path="res://Materials/XRay.material" id="4_1j8e0"]
+
+[node name="ButtonTester" type="Node3D" unique_id=1014566388]
+script = ExtResource("1_kea0j")
+materials_array = Array[Material]([ExtResource("2_o6u4r"), ExtResource("3_dqt7k"), ExtResource("4_1j8e0")])
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1177008640]
+
+[node name="loadGLB" type="Button" parent="." unique_id=915198438]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+text = "LoadGLB"
+
+[node name="GlbFileDialog" type="FileDialog" parent="." unique_id=662049779]
+oversampling_override = 1.0
+title = "Open a File"
+initial_position = 1
+size = Vector2i(1024, 1024)
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+root_subfolder = "D:\\scans\\Exports_For_Drawing"
+use_native_dialog = true
+
+[connection signal="pressed" from="loadGLB" to="." method="_on_load_glb_pressed"]
+[connection signal="file_selected" from="GlbFileDialog" to="." method="_on_glb_file_dialog_file_selected"]

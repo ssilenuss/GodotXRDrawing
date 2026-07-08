@@ -19,8 +19,35 @@
 [ext_resource type="Script" uid="uid://bdl76lcm5lj0m" path="res://Scripts/xr_cam_rig.gd" id="15_4ovje"]
 [ext_resource type="PackedScene" uid="uid://cfy3gxe1cw048" path="res://Scenes/xr_menu.tscn" id="18_63jbj"]
 [ext_resource type="Shader" uid="uid://co46wr74f6en7" path="res://Shader/SBS.gdshader" id="19_fre3h"]
-[ext_resource type="Texture2D" uid="uid://c1utlkbehqkt0" path="res://icon.svg" id="19_ytosp"]
 [ext_resource type="Script" uid="uid://b6i3oihdrdwsp" path="res://texture_controller.gd" id="20_lqql0"]
+[ext_resource type="Shader" uid="uid://d4kk3p1k8yfgb" path="res://Process.gdshader" id="22_6mdio"]
+[ext_resource type="Script" uid="uid://dl5dfq8u31jge" path="res://GrabbablesController.gd" id="22_ydtbn"]
+[ext_resource type="Material" uid="uid://cjnvi2tu236fi" path="res://Materials/Vertex_Shaded.material" id="23_v6jgk"]
+[ext_resource type="Material" uid="uid://2xdwvhumafdj" path="res://Materials/Vertex_Unshaded.material" id="24_7hv8k"]
+[ext_resource type="Material" uid="uid://wm3iywveyy30" path="res://Materials/XRay.material" id="25_1y4rt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fre3h"]
+shader = ExtResource("22_6mdio")
+shader_parameter/brightness = 0.0
+shader_parameter/saturation = 1.0
+shader_parameter/hue_shift = 0.0
+shader_parameter/contrast = 1.0
+shader_parameter/blur_amount = 0.0
+shader_parameter/enable_sobel = false
+shader_parameter/invert_sobel = false
+shader_parameter/edge_threshold = 0.047
+shader_parameter/edge_smoothing = 0.001
+shader_parameter/enable_hsv_mask = false
+shader_parameter/invert_hsv_mask = false
+shader_parameter/hue_range = Vector2(-0.255, 1)
+shader_parameter/saturation_range = Vector2(0, 1)
+shader_parameter/value_range = Vector2(0, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_6mdio"]
+viewport_path = NodePath("Grabbable XR Rig/XRCamRig/leftEye")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_e2j32"]
+viewport_path = NodePath("Grabbable XR Rig/XRCamRig/rightEye")
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tvdja"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -55,15 +82,15 @@ top_radius = 0.05
 bottom_radius = 0.05
 height = 0.1
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_fre3h"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_v6jgk"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6mdio"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7hv8k"]
 resource_local_to_scene = true
 transparency = 1
 cull_mode = 2
 shading_mode = 0
-albedo_texture = SubResource("ViewportTexture_fre3h")
+albedo_texture = SubResource("ViewportTexture_v6jgk")
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_rcli2"]
 top_radius = 0.005
@@ -96,7 +123,26 @@ orientation = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4rwac"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_ydtbn"]
+viewport_path = NodePath("TextureController/leftEye")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_epkc0"]
+viewport_path = NodePath("Grabbable XR Rig/XRCamRig/rightEye")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ovje"]
+resource_local_to_scene = true
+render_priority = 10
+shader = ExtResource("10_72ti1")
+shader_parameter/top_left = Vector3(-0.25, 1.2905307, -1.517516)
+shader_parameter/top_right = Vector3(0.25, 1.2905307, -1.517516)
+shader_parameter/bottom_left = Vector3(-0.25, 0.79053074, -1.517516)
+shader_parameter/bottom_right = Vector3(0.25, 0.79053074, -1.517516)
+shader_parameter/tex_right = SubResource("ViewportTexture_epkc0")
+shader_parameter/tex_left = SubResource("ViewportTexture_ydtbn")
+shader_parameter/alpha = 1.0
+
 [sub_resource type="BoxMesh" id="BoxMesh_ibo6o"]
+material = SubResource("ShaderMaterial_4ovje")
 
 [sub_resource type="SphereMesh" id="SphereMesh_fcnbl"]
 radius = 0.01
@@ -104,24 +150,6 @@ height = 0.02
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wr38t"]
 radius = 0.02
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_4ovje"]
-viewport_path = NodePath("Grabbable XR Rig/XRCamRig/leftEye")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_jvalp"]
-viewport_path = NodePath("Grabbable XR Rig/XRCamRig/rightEye")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ovje"]
-resource_local_to_scene = true
-render_priority = 0
-shader = ExtResource("10_72ti1")
-shader_parameter/top_left = Vector3(-0.25, 1.2905307, -1.517516)
-shader_parameter/top_right = Vector3(0.25, 1.2905307, -1.517516)
-shader_parameter/bottom_left = Vector3(-0.25, 0.79053074, -1.517516)
-shader_parameter/bottom_right = Vector3(0.25, 0.79053074, -1.517516)
-shader_parameter/tex_right = SubResource("ViewportTexture_jvalp")
-shader_parameter/tex_left = SubResource("ViewportTexture_4ovje")
-shader_parameter/alpha = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_fwtho"]
 size = Vector2(0.5, 0.5)
@@ -198,12 +226,82 @@ size = Vector3(0.06, 0.02, 0.02)
 shading_mode = 0
 albedo_color = Color(0.49354547, 0.49354553, 0.49354553, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r6xnh"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_i1jue"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i1jue"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2xd26"]
+shading_mode = 0
+albedo_color = Color(0.39688927, 0.39688927, 0.39688924, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rhp74"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rhp74"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c0mvg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_sbm2b"]
+
 [node name="Main" type="Node3D" unique_id=1544302401 node_paths=PackedStringArray("menu_passthrough")]
 script = ExtResource("1_4ovje")
 menu_passthrough = NodePath("Menu_Passthrough")
 
+[node name="TextureController" type="Node" parent="." unique_id=450742181 node_paths=PackedStringArray("camera_left", "camera_right", "left_texture", "right_texture", "left_post", "right_post")]
+script = ExtResource("20_lqql0")
+sbs = false
+sobel = true
+edge_threshold = 0.047
+edge_smoothing = 0.001
+hue_range = Vector2(-0.255, 1)
+camera_left = NodePath("../Grabbable XR Rig/XRCamRig/leftEye/Camera3D")
+camera_right = NodePath("../Grabbable XR Rig/XRCamRig/rightEye/Camera3D")
+left_texture = NodePath("../Grabbable XR Rig/XRCamRig/leftEye/TextureLeft")
+right_texture = NodePath("../Grabbable XR Rig/XRCamRig/rightEye/TextureRight")
+left_post = NodePath("leftEye/TextureLeft_Process")
+right_post = NodePath("rightEye/TextureRight_Process")
+
+[node name="leftEye" type="SubViewport" parent="TextureController" unique_id=1747622740]
+transparent_bg = true
+size = Vector2i(2048, 2048)
+
+[node name="TextureLeft_Process" type="TextureRect" parent="TextureController/leftEye" unique_id=1183264870]
+material = SubResource("ShaderMaterial_fre3h")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("ViewportTexture_6mdio")
+expand_mode = 1
+
+[node name="rightEye" type="SubViewport" parent="TextureController" unique_id=2045980665]
+transparent_bg = true
+size = Vector2i(2048, 2048)
+
+[node name="TextureRight_Process" type="TextureRect" parent="TextureController/rightEye" unique_id=1948943499]
+material = SubResource("ShaderMaterial_fre3h")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("ViewportTexture_e2j32")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1227844160]
-transform = Transform3D(0.924573, 0.227053, -0.305961, 0, 0.803036, 0.595931, 0.381006, -0.550981, 0.742465, 0, 3.85782, 0)
+transform = Transform3D(0.92457306, 0.28181428, 0.25641066, 0, -0.6729821, 0.7396585, 0.381006, -0.6838682, -0.6222212, 0, 3.85782, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=951212275]
 environment = SubResource("Environment_fjqtr")
@@ -250,20 +348,25 @@ transform = Transform3D(1, 0, 0, 0, -0.46174866, 0.8870108, 0, -0.8870108, -0.46
 mesh = SubResource("CylinderMesh_ytosp")
 skeleton = NodePath("../..")
 
-[node name="XRMenu2" parent="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu" unique_id=2078844677 node_paths=PackedStringArray("root", "file_dialog") instance=ExtResource("18_63jbj")]
+[node name="XRMenu2" parent="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu" unique_id=2078844677 node_paths=PackedStringArray("root", "pic_dialog", "glb_dialog") instance=ExtResource("18_63jbj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7252903e-09, 0.06632441)
-size = Vector2(0.125, 0.145)
-resolution = Vector2(256, 296.96)
+size = Vector2(0.2, 0.4)
+resolution = Vector2(512, 1024)
 root = NodePath("../../../../..")
-file_dialog = NodePath("SubViewport/Control/MarginContainer/VboxContainer/Panel3/HBoxContainer/PicFileDialog")
+pic_dialog = NodePath("SubViewport/Control/VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer/PicFileDialog")
+glb_dialog = NodePath("SubViewport/Control/VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer/GlbFileDialog")
 
 [node name="MeshInstance3D" parent="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2" index="0" unique_id=1998062954]
-surface_material_override/0 = SubResource("StandardMaterial3D_6mdio")
+surface_material_override/0 = SubResource("StandardMaterial3D_7hv8k")
 
 [node name="SubViewport" parent="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2" index="2" unique_id=797192175]
-size = Vector2i(256, 296)
+size = Vector2i(512, 1024)
 
-[node name="PicFileDialog" parent="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/MarginContainer/VboxContainer/Panel3/HBoxContainer" parent_id_path=PackedInt32Array(2078844677, 831668772, 1541116252) index="0" unique_id=567502073]
+[node name="PicFileDialog" parent="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer" parent_id_path=PackedInt32Array(2078844677, 831668772, 1493655249) index="0" unique_id=1282791094]
+title = "Open a File"
+file_mode = 0
+
+[node name="GlbFileDialog" parent="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer" parent_id_path=PackedInt32Array(2078844677, 831668772, 1493655249) index="1" unique_id=302250574]
 title = "Open a File"
 file_mode = 0
 
@@ -311,6 +414,7 @@ current = true
 near = 0.01
 
 [node name="Menu_Passthrough" type="Node3D" parent="." unique_id=39007315 node_paths=PackedStringArray("root", "world_environment")]
+visible = false
 script = ExtResource("4_jvalp")
 root = NodePath("..")
 world_environment = NodePath("../WorldEnvironment")
@@ -653,7 +757,7 @@ text = "Color Map
 script = ExtResource("12_fwtho")
 
 [node name="Grabbable XR Rig" type="Area3D" parent="." unique_id=1601241957]
-transform = Transform3D(-1.9845428, 0, 0.24817261, 0, 2, 0, -0.24817261, 0, -1.9845428, 0, 0.89929855, 0.9162416)
+transform = Transform3D(-0.24817252, 0, -1.9845428, 0, 2, 0, 1.9845428, 0, -0.24817252, 0.8560466, 1.0299275, -0.03975238)
 collision_mask = 128
 script = ExtResource("13_yh5wg")
 
@@ -682,10 +786,10 @@ left_texture = NodePath("leftEye/TextureLeft")
 right_texture = NodePath("rightEye/TextureRight")
 
 [node name="Left" type="Node3D" parent="Grabbable XR Rig/XRCamRig" unique_id=500857974]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03249999, 0, -5.9604645e-08)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0325, 0, 0)
 
 [node name="Right" type="Node3D" parent="Grabbable XR Rig/XRCamRig" unique_id=1055145085]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.032500006, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.032500014, 0, 1.1920929e-07)
 
 [node name="leftEye" type="SubViewport" parent="Grabbable XR Rig/XRCamRig" unique_id=1501503133]
 transparent_bg = true
@@ -700,12 +804,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource("19_ytosp")
 expand_mode = 1
 
 [node name="Camera3D" type="Camera3D" parent="Grabbable XR Rig/XRCamRig/leftEye" unique_id=765205726]
-transform = Transform3D(-0.9922714, 0, 0.124086305, 0, 1, 0, -0.124086305, 0, -0.9922714, 0.032248806, 0.89929855, 0.92027444)
-visible = false
+transform = Transform3D(-0.12408626, 0, -0.9922714, 0, 1, 0, 0.9922714, 0, -0.12408626, 0.8600794, 1.0299275, -0.072001204)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Grabbable XR Rig/XRCamRig/leftEye/Camera3D" unique_id=434729373]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -2.3283064e-10, -8.7761476e-10, -0.020077484)
@@ -725,13 +827,11 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource("19_ytosp")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Camera3D" type="Camera3D" parent="Grabbable XR Rig/XRCamRig/rightEye" unique_id=1973688277]
-transform = Transform3D(-0.9922714, 0, 0.124086305, 0, 1, 0, -0.124086305, 0, -0.9922714, -0.03224883, 0.89929855, 0.9122088)
-visible = false
+transform = Transform3D(-0.12408626, 0, -0.9922714, 0, 1, 0, 0.9922714, 0, -0.12408626, 0.8520137, 1.0299275, -0.007503558)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Grabbable XR Rig/XRCamRig/rightEye/Camera3D" unique_id=133321226]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -2.3283064e-10, -8.7761476e-10, -0.020077484)
@@ -742,21 +842,66 @@ surface_material_override/0 = SubResource("StandardMaterial3D_sbm2b")
 mesh = SubResource("BoxMesh_i1jue")
 surface_material_override/0 = SubResource("StandardMaterial3D_rhp74")
 
-[node name="TextureController" type="Node" parent="." unique_id=450742181 node_paths=PackedStringArray("camera_left", "camera_right", "left_texture", "right_texture")]
-script = ExtResource("20_lqql0")
-sbs = false
-texture = ExtResource("19_ytosp")
-expand = 1
-camera_left = NodePath("../Grabbable XR Rig/XRCamRig/leftEye/Camera3D")
-camera_right = NodePath("../Grabbable XR Rig/XRCamRig/rightEye/Camera3D")
-left_texture = NodePath("../Grabbable XR Rig/XRCamRig/leftEye/TextureLeft")
-right_texture = NodePath("../Grabbable XR Rig/XRCamRig/rightEye/TextureRight")
+[node name="Stage" type="Node3D" parent="." unique_id=1754100478]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
+script = ExtResource("22_ydtbn")
+materials_array = Array[Material]([ExtResource("23_v6jgk"), ExtResource("24_7hv8k"), ExtResource("25_1y4rt")])
+
+[node name="Grabbable_Background" type="Area3D" parent="Stage" unique_id=357311157]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38658857, 0, 0)
+collision_mask = 129
+script = ExtResource("13_yh5wg")
+metadata/_custom_type_script = "uid://dahbf44mx6kxq"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stage/Grabbable_Background" unique_id=1347540745]
+material_override = SubResource("StandardMaterial3D_r6xnh")
+mesh = SubResource("SphereMesh_i1jue")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stage/Grabbable_Background" unique_id=1866250766]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.60924923, 0)
+shape = SubResource("BoxShape3D_i1jue")
+
+[node name="Grabaera" type="MeshInstance3D" parent="Stage/Grabbable_Background/CollisionShape3D" unique_id=1221602930]
+material_override = SubResource("StandardMaterial3D_2xd26")
+mesh = SubResource("BoxMesh_rhp74")
+
+[node name="Grabbable_Cube" type="Area3D" parent="Stage" unique_id=325897649]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.39407963, 0, 0)
+collision_mask = 129
+script = ExtResource("13_yh5wg")
+metadata/_custom_type_script = "uid://dahbf44mx6kxq"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stage/Grabbable_Cube" unique_id=1545978259]
+shape = SubResource("BoxShape3D_rhp74")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stage/Grabbable_Cube" unique_id=1753752386]
+material_override = SubResource("StandardMaterial3D_c0mvg")
+mesh = SubResource("BoxMesh_sbm2b")
 
 [connection signal="button_released" from="XROrigin3D/LeftController" to="XRCornerPinTextureController" method="_on_left_controller_button_released"]
-[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/MarginContainer/VboxContainer/Panel/VboxContainer/AlphaSlider" to="XRCornerPinTextureController/XR_CornerPin_Mesh" method="_on_alpha_slider_value_changed"]
-[connection signal="file_selected" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/MarginContainer/VboxContainer/Panel3/HBoxContainer/PicFileDialog" to="TextureController" method="_on_pic_file_dialog_file_selected"]
-[connection signal="pressed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/MarginContainer/VboxContainer/Panel3/HBoxContainer/LoadPic" to="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2" method="_on_load_pic_pressed"]
-[connection signal="toggled" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/MarginContainer/VboxContainer/Panel3/HBoxContainer/Button" to="TextureController" method="_on_button_toggled"]
+[connection signal="file_selected" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer/PicFileDialog" to="TextureController" method="_on_pic_file_dialog_file_selected"]
+[connection signal="file_selected" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer/GlbFileDialog" to="Stage" method="_on_glb_file_dialog_file_selected"]
+[connection signal="pressed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer/LoadPic" to="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2" method="_on_load_pic_pressed"]
+[connection signal="pressed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer/LoadGLB" to="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2" method="_on_load_glb_pressed"]
+[connection signal="toggled" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu0/Panel3/HBoxContainer/SBS" to="TextureController" method="_on_sbs_toggled"]
+[connection signal="toggled" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu1 Sobel/SobelPanel/Hbox/EnableSobel" to="TextureController" method="_on_enable_sobel_toggled"]
+[connection signal="toggled" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu1 Sobel/SobelPanel/Hbox/InvertSobel" to="TextureController" method="_on_invert_sobel_toggled"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu1 Sobel/ThresholdPanel/VboxContainer/SobelThresholdSlider" to="TextureController" method="_on_sobel_threshold_slider_value_changed"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu1 Sobel/SmoothingPanel/VboxContainer/SobelSmoothingSlider" to="TextureController" method="_on_sobel_smoothing_slider_value_changed"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu2 BCS/AlphaPanel/VboxContainer/AlphaSlider" to="XRCornerPinTextureController/XR_CornerPin_Mesh" method="_on_alpha_slider_value_changed"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu2 BCS/BrightnessPanel/VboxContainer/BrightnessSlider" to="TextureController" method="_on_brightness_slider_value_changed"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu2 BCS/ContrastPanel/VboxContainer/ContrastSlider" to="TextureController" method="_on_contrast_slider_value_changed"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu2 BCS/SaturationPanel/VboxContainer/SaturationSlider" to="TextureController" method="_on_saturation_slider_value_changed"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu2 BCS/HueShiftPanel/VboxContainer/HueShiftSlider" to="TextureController" method="_on_hue_shift_slider_value_changed"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu2 BCS/BlurPanel/VboxContainer/BlurSlider" to="TextureController" method="_on_blur_slider_value_changed"]
+[connection signal="toggled" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu3 Mask/MaskPanel/Hbox/Enable_Mask" to="TextureController" method="_on_enable_mask_toggled"]
+[connection signal="toggled" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu3 Mask/MaskPanel/Hbox/Invert_Mask" to="TextureController" method="_on_invert_mask_toggled"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu3 Mask/HuePanel/VBoxContainer/HBoxContainer/VboxContainer/HueMaskMinSpinBox" to="TextureController" method="_on_hue_mask_min_spin_box_value_changed"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu3 Mask/HuePanel/VBoxContainer/HBoxContainer/VboxContainer2/HueMaskMaxSpinBox" to="TextureController" method="_on_hue_mask_max_spin_box_value_changed"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu3 Mask/SaturationMaskPanel/VBoxContainer/HBoxContainer/VboxContainer/SatMaskMinSpinBox" to="TextureController" method="_on_sat_mask_min_spin_box_value_changed"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu3 Mask/SaturationMaskPanel/VBoxContainer/HBoxContainer/VboxContainer2/SatMaskMaxSpinBox" to="TextureController" method="_on_sat_mask_max_spin_box_value_changed"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu3 Mask/ValuePanel/VBoxContainer/HBoxContainer/VboxContainer/ValueMaskMinSpinBox" to="TextureController" method="_on_value_mask_min_spin_box_value_changed"]
+[connection signal="value_changed" from="XROrigin3D/LeftController/LeftControllerRayCast/WristMenu/XRMenu2/SubViewport/Control/VBoxContainer/MarginContainer/Menu3 Mask/ValuePanel/VBoxContainer/HBoxContainer/VboxContainer2/ValueMaskMaxSpinBox" to="TextureController" method="_on_value_mask_max_spin_box_value_changed"]
 [connection signal="button_released" from="XROrigin3D/RightController" to="XRCornerPinTextureController" method="_on_right_controller_button_released"]
 [connection signal="new_value" from="Menu_Passthrough/Interfaces/InterfaceBrightnessContrastSaturation/BrightnessSlider" to="Menu_Passthrough" method="_on_brightness_new_value"]
 [connection signal="new_value" from="Menu_Passthrough/Interfaces/InterfaceBrightnessContrastSaturation/ContrastSlider" to="Menu_Passthrough" method="_on_contrast_new_value"]
